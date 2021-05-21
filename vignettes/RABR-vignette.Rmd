@@ -1,0 +1,110 @@
+---
+title: "A Practical Response Adaptive Block Randomization (RABR) Design with Analytic Type I Error Protection"
+author: Tianyu Zhan
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{RABR-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+In this vignette, we illustrate how to use this package to evaluate operating characteristics of RABR with a continuous endpoint by simulations. Suppose that there are 3 active treatments and a placebo, and all groups have the same standard deviation at 1. We use Dunnett adjustment to control multiplicity with the one-sided significance level at 2.5%. To save computational time, we use 10^4 iterations for type I error rate calculation and 10^3 iterations for power calculation for demonstration. In practice, one can use at least 10^5 to stabilize results. 
+
+## 1. Evaluate type I error rate, power, and ASN (average sample size) of RABR
+
+First, we evaluate type I error rate when all treatment groups have the same response mean, for example 0. The error rates in pairwise comparisons and multiplicity adjusted error rates are controlled at the nominal level 2.5%. The randomization vector R is considered at (3, 4, 2, 1), which means that placebo has fixed randomization probability at 3/10, the best performing group has 4/10, the second-best group has 2/10, and the worst group has 1/10. 
+
+```{r type I error}
+library(RABR)
+library(parallel)
+library(doParallel)
+
+RABR.null.fit = RABRcontinuous(MeanVec = c(0, 0, 0, 0), 
+               SdVec = c(1, 1, 1, 1), 
+               M = 60, 
+               N = 120, 
+               R = c(3, 4, 2, 1), 
+               Nitt = 10^4, 
+               Alpha = 0.025, 
+               Ncluster = 2, 
+               Seed = 12345, 
+               MultiMethod = "dunnett")
+
+## Probability of rejecting each elementary hypothesis without multiplicity adjustment
+print(RABR.null.fit$ProbUnadj)
+
+## Probability of rejecting each elementary null hypothesis with multiplicity adjustment
+print(RABR.null.fit$ProbAdj)
+
+## Probability of rejecting at least one elementary null hypothesis with multiplicity adjustment
+print(RABR.null.fit$ProbAdjOverall)
+```
+
+Then, we compute power with the assumption that placebo has mean 0.43, and three active treatments have 0.48, 0.63, 1.2. The randomization vector is set at (9, 9, 1, 1) to target at 42 for placebo and 42 for the selected treatment group (S1). 
+
+```{r power}
+RABR.alter.fit = RABRcontinuous(MeanVec = c(0.43, 0.48, 0.63, 1.2), 
+               SdVec = c(1, 1, 1, 1), 
+               M = 60, 
+               N = 120, 
+               R = c(9, 9, 1, 1), 
+               Nitt = 10^3, 
+               Alpha = 0.025, 
+               Ncluster = 2, 
+               Seed = 12345, 
+               MultiMethod = "dunnett")
+
+## Probability of selecting (if unadjusted p-value is the smallest among all active treatment groups) AND confirming (if the adjusted p-value is smaller than the significance level) the efficacy of each active treatment group. 
+print(RABR.alter.fit$ProbAdjSelected)
+
+## ASN Average sample size of placebo and selected treatment groups (S1, S2, S3). 
+print(RABR.alter.fit$ASN)
+```
+
+## 2. Choose hyperparameters of RABR based on a specific study objective
+
+In this section, we illustrate how to choose hyperparameters M and R in RABR to meet a specific study objective. There are three active treatment groups: D1, D2 and D3. We denote the best selected group as S1, and next one as S2, and the worst one as S3. Consider N = 120 with the objective of having 42 for both placebo and the treatment groups. We consider the following 5 candidates:
+
+1. M = 40, R = (8, 8, 3, 1)
+2. M = 60, R = (9, 9, 1, 1)
+3. M = 24, R = (9, 9, 5, 1)
+4. M = 40, R = (16, 16, 7, 1)
+5. M = 40, R = (4, 4, 1, 1)
+
+Based on the simulation results shown below, the 4th candidate has the highest overall power of detecting a significant treatment effect in at least one treatment group, and the highest probability of selecting and confirming the efficacy of the best group (D3). The 2nd candidate has the most accurate ASN of S1 to reach the target value of 42. Study team can choose the 4th candidate if power is more important, while select the 2nd candidate if a more accurate ASN is appealing. More discussion on the impact of hyperparameters in RABR can found in Section 5.3 of Zhan et al. 2020. 
+
+```{r sensitivity}
+output.mat = matrix(NA, nrow = 5, ncol = 10)
+colnames(output.mat) = c("M", "R", "Prob_D1", "Prob_D2", "Prob_D3", "Prob_ALO",
+                         "ASN_PBO", "ASN_S1", "ASN_S2", "ASN_S3")
+output.mat = data.frame(output.mat)
+
+for (scen.ind in 1:5){
+  
+  if (scen.ind==1){M.cand = 40; R.cand = c(8, 8, 3, 1)}
+  if (scen.ind==2){M.cand = 60; R.cand = c(9, 9, 1, 1)} 
+  if (scen.ind==3){M.cand = 24; R.cand = c(9, 9, 5, 1)} 
+  if (scen.ind==4){M.cand = 40; R.cand = c(16, 16, 7, 1)} 
+  if (scen.ind==5){M.cand = 40; R.cand = c(4, 4, 1, 1)} 
+  
+  RABR.sen.fit = RABRcontinuous(MeanVec = c(0.43, 0.48, 0.63, 1.2), 
+               SdVec = c(1, 1, 1, 1), 
+               M = M.cand, 
+               N = 120, 
+               R = R.cand, 
+               Nitt = 10^3, 
+               Alpha = 0.025, 
+               Ncluster = 2, 
+               Seed = 12345, 
+               MultiMethod = "dunnett")
+  
+  output.mat$M[scen.ind] = M.cand
+  output.mat$R[scen.ind] = paste0("(", paste0(R.cand,collapse = ","), ")")
+  output.mat[scen.ind, c("Prob_D1", "Prob_D2", "Prob_D3")] = RABR.sen.fit$ProbAdjSelected
+  output.mat$Prob_ALO[scen.ind] = RABR.sen.fit$ProbAdjOverall 
+  output.mat[scen.ind, c("ASN_PBO", "ASN_S1", "ASN_S2", "ASN_S3")] = RABR.sen.fit$ASN
+}
+print(output.mat)
+```
+
+

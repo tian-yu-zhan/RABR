@@ -1,0 +1,72 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# A Practical Response Adaptive Block Randomization (RABR) Design with Analytic Type I Error Protection
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This package is to evaluate type I error rate, power, and operating characteristics of RABR via simulations. 
+
+## Installation
+
+You can install the released version of RABR from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("RABR")
+```
+
+## Example
+
+We provide an example of RABR with a continuous endpoint. One may refer to the vignette for more details. 
+
+```{r example}
+library(RABR)
+library(parallel)
+library(doParallel)
+RABR.fit = RABRcontinuous(
+            MeanVec = c(0.43, 0.48, 0.63, 1.2),
+            SdVec = c(1, 1, 1, 1),
+            M = 60,
+            N = 120,
+            R = c(8, 9, 2, 1),
+            Nitt = 1000,
+            Alpha = 0.025,
+            Ncluster = 2,
+            Seed = 12345,
+            MultiMethod = "dunnett")
+##
+## Probability of rejecting each elementary null
+## hypothesis without multiplicity adjustment
+   print(RABR.fit$ProbUnadj)
+##
+## Probability of rejecting each elementary null
+## hypothesis with multiplicity adjustment
+   print(RABR.fit$ProbAdj)
+##
+## Probability of selecting and confirming the
+## efficacy of each active treatment group
+   print(RABR.fit$ProbAdjSelected)
+##
+## ProbAdjOverall Probability of rejecting at
+## least one elementary null hypothesis
+## with multiplicity adjustment
+   print(RABR.fit$ProbAdjOverall)
+##
+## ASN Average sample size of placebo and active
+## treatment groups
+   print(RABR.fit$ASN)
+```
+
