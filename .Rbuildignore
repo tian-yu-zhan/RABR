@@ -3,4 +3,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
+<<<<<<< HEAD
 ^CRAN-RELEASE$
+=======
+>>>>>>> 45f82aad63a0410ea884ce10af8559bc3124aa41
