@@ -43,6 +43,8 @@
 #' @examples ## group, and the worse group have randomization
 #' @examples ## probabilities 7/20, 7/20, 1/20 respectively.
 #' @examples ## The one-sided significance level is 2.5%.
+#' @examples ## Nitt = 100 is for demonstration, and should be
+#' @examples ## increased to 10^5 in practice.
 #' @examples ##
 #' @examples library(parallel)
 #' @examples library(doParallel)
@@ -51,7 +53,7 @@
 #' @examples            M = 90,
 #' @examples            N = 180,
 #' @examples            R = c(7, 7, 1),
-#' @examples            Nitt = 1000,
+#' @examples            Nitt = 100,
 #' @examples            Alpha = 0.025,
 #' @examples            Ncluster = 2,
 #' @examples            Seed = 12345,

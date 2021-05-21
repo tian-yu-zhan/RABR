@@ -6,8 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This package is to evaluate type I error rate, power, and operating
-characteristics of RABR via simulations.
+To evaluate type I error rate, power, and operating characteristics of
+RABR via simulations.
 
 ## Installation
 
@@ -20,8 +20,8 @@ install.packages("RABR")
 
 ## Example
 
-We provide an example of continuous endpoint. One may refer to the
-vignette for more details.
+We provide an example of RABR with a continuous endpoint. One may refer
+to the vignette for more details.
 
 ``` r
 library(RABR)

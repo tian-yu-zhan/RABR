@@ -46,7 +46,9 @@
 #' @examples ## group, the second-best group, and the worst group
 #' @examples ## have randomization probabilities 8/20, 9/20, 2/20
 #' @examples ## 1/20, respectively. The one-sided significance
-#' @examples ## level is considered at 2.5%.
+#' @examples ## level is considered at 2.5%. Nitt = 100 is for
+#' @examples ## demonstration, and should be increased to 10^5
+#' @examples ## in practice.
 #' @examples ##
 #' @examples library(parallel)
 #' @examples library(doParallel)
@@ -56,7 +58,7 @@
 #' @examples            M = 60,
 #' @examples            N = 120,
 #' @examples            R = c(8, 9, 2, 1),
-#' @examples            Nitt = 1000,
+#' @examples            Nitt = 100,
 #' @examples            Alpha = 0.025,
 #' @examples            Ncluster = 2,
 #' @examples            Seed = 12345,

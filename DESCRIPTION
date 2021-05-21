@@ -1,5 +1,5 @@
 Package: RABR
-Title: Simulations for Response Adaptive Block Randomization (RABR) Design
+Title: Simulations for Response Adaptive Block Randomization Design
 Version: 0.1.0
 Authors@R: 
     person(given = "Tianyu",

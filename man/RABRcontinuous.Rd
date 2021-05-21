@@ -71,7 +71,9 @@ The \code{Alpha} is the one-sided significance level. The \code{MultiMethod} can
 ## group, the second-best group, and the worst group
 ## have randomization probabilities 8/20, 9/20, 2/20
 ## 1/20, respectively. The one-sided significance
-## level is considered at 2.5\%.
+## level is considered at 2.5\%. Nitt = 100 is for
+## demonstration, and should be increased to 10^5
+## in practice.
 ##
 library(parallel)
 library(doParallel)
@@ -81,7 +83,7 @@ RABR.fit = RABRcontinuous(
            M = 60,
            N = 120,
            R = c(8, 9, 2, 1),
-           Nitt = 1000,
+           Nitt = 100,
            Alpha = 0.025,
            Ncluster = 2,
            Seed = 12345,

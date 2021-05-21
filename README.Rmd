@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This package is to evaluate type I error rate, power, and operating characteristics of RABR via simulations. 
+To evaluate type I error rate, power, and operating characteristics of RABR via simulations. 
 
 ## Installation
 
