@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "tianyu.zhan.stats@gmail.com",
            comment = c(ORCID = "0000-0002-8572-4539"))
-Description: Computation of type I error rate, power and operating characteristics of RABR via simulations.
+Description: Implement the Response Adaptive Block Randomization (RABR) proposed in Zhan et al. 2020 to evaluate type I error rate, power and operating characteristics of RABR with simulations for binary and continuous endpoints.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -29,6 +29,7 @@ Suggests:
     knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Reference: Zhan et al. (2020). "A Practical Response Adaptive Block Randomization Design with Analytic Type I Error Protection". <arXiv:2004.07356>
 VignetteBuilder: knitr
 URL: https://github.com/tian-yu-zhan/RABR
 BugReports: https://github.com/tian-yu-zhan/RABR/issues
