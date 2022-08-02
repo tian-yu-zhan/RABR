@@ -115,9 +115,9 @@ RABR.fit = RABRcontinuous(
 
 }
 \references{
-Zhan, T., Cui, L., Geng, Z., Zhang, L., Gu, Y., & Chan, I. S. (2020). A Practical Response Adaptive Block Randomization Design with Analytic Type I Error Protection. arXiv preprint arXiv:2004.07356.
+Zhan, T., Cui, L., Geng, Z., Zhang, L., Gu, Y., & Chan, I. S. (2021). A practical response adaptive block randomization (RABR) design with analytic type I error protection. Statistics in Medicine, 40(23), 4947-4960.
 
-Cui, L., Zhan, T., Zhang, L., Geng, Z., Gu, Y., & Chan, I. S. (2021). An automation-based adaptive seamless design for dose selection and confirmation with improved power and efficiency. Statistical Methods in Medical Research, 0962280220984822.
+Cui, L., Zhan, T., Zhang, L., Geng, Z., Gu, Y., & Chan, I. S. (2021). An automation-based adaptive seamless design for dose selection and confirmation with improved power and efficiency. Statistical Methods in Medical Research, 30(4), 1013-1025.
 }
 \author{
 Tianyu Zhan (tianyu.zhan.stats@gmail.com)

@@ -1,18 +1,18 @@
 Package: RABR
 Title: Simulations for Response Adaptive Block Randomization Design
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Tianyu",
            family = "Zhan",
            role = c("aut", "cre"),
            email = "tianyu.zhan.stats@gmail.com",
            comment = c(ORCID = "0000-0002-8572-4539"))
-Description: Conduct simulations of the Response Adaptive Block Randomization (RABR) design to evaluate its type I error rate, power and operating characteristics for binary and continuous endpoints. For more details of the proposed method, please refer to Zhan et al. (2020) <arXiv:2004.07356>. 
+Description: Conduct simulations of the Response Adaptive Block Randomization (RABR) design to evaluate its type I error rate, power and operating characteristics for binary and continuous endpoints. For more details of the proposed method, please refer to Zhan et al. (2021) <https://doi.org/10.1002/sim.9104>. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Imports: 
     asd,
     cubature,
